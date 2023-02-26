@@ -3,6 +3,13 @@
 ## MQTT for arm
 [arm64v8/eclipse-mosquitto](https://hub.docker.com/r/arm64v8/eclipse-mosquitto/)
 
+When on MacBook arm (m1/m2) devices, the mosquitto broker is different.
+
+Run from the root of this repo:
+```
+docker run -it -p 1883:1883 -p 9001:9001 -v $PWD:/mosquitto/config/  arm64v8/eclipse-mosquitto
+```
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 
