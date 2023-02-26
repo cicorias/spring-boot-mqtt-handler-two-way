@@ -10,6 +10,31 @@ Run from the root of this repo:
 docker run -it -p 1883:1883 -p 9001:9001 -v $PWD:/mosquitto/config/  arm64v8/eclipse-mosquitto
 ```
 
+## NOTES:
+need to align on topics correctly -- not correct now
+
+```
+# where clients listen
+# pattern readwrite $dps/registrations/res/#
+# where clients publish
+# pattern readwrite $dps/registrations/PUT/iotdps-register/#
+
+user admin
+# dps subscribes to these topics
+## this is where devices send initial registration requests
+topic readwrite $dps/registrations/PUT/iotdps-register/#
+## this is where devices send operationa status requests
+topic readwrite $dps/registrations/GET/iotdps-get-operationstatus/#
+# this is where DPS responds with status
+topic readwrite $dps/registrations/res/#
+
+
+pattern write $dps/registrations/PUT/iotdps-register/%u/#
+pattern write $dps/registrations/GET/iotdps-get-operationstatus/%u/#
+pattern read $dps/registrations/res/%u/#
+```
+
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 

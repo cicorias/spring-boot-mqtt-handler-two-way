@@ -19,6 +19,8 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 
 @SpringBootApplication
 @IntegrationComponentScan
@@ -80,7 +82,7 @@ public class MessageHandlerApplication {
 				System.out.println(message.getHeaders());
 				MyGateway gateway = context.getBean(MyGateway.class);
 
-				gateway.sendToMqtt("{\"foo\":\"bar\"}");
+				gateway.sendToMqtt("{\"foo\":\"bar\"}", "$dps/registrations/res/200/?$rid=1");
 			}
 
 		};
@@ -93,6 +95,7 @@ public class MessageHandlerApplication {
 
 	@MessagingGateway(defaultRequestChannel = "mqttOutboundChannel")
 	public interface MyGateway {
-		void sendToMqtt(String data);
+		// void sendToMqtt(String data);
+		void sendToMqtt(String data, @Header(MqttHeaders.TOPIC) String topic);
 	}
 }
